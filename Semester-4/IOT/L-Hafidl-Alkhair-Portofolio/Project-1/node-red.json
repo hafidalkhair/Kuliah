@@ -1,0 +1,255 @@
+[
+    {
+        "id": "ce81de5085f2bd5c",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "117c2b68bbe9f794",
+        "type": "mysql",
+        "z": "ce81de5085f2bd5c",
+        "mydb": "ef456045cce864d7",
+        "name": "database",
+        "x": 660,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "50ccafe8cb9708d1",
+        "type": "function",
+        "z": "ce81de5085f2bd5c",
+        "name": "function 1",
+        "func": "let t = msg.payload;\nlet h = msg.payload;\n\nmsg.topic = \"INSERT INTO sensor (temperature, humidity) VALUES (\" + t + \",\" + h + \")\";\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [
+                "117c2b68bbe9f794",
+                "a0729e2a0cb8b285"
+            ]
+        ]
+    },
+    {
+        "id": "a0729e2a0cb8b285",
+        "type": "ui_gauge",
+        "z": "ce81de5085f2bd5c",
+        "name": "",
+        "group": "",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "suhu",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "30",
+        "seg2": "50",
+        "diff": false,
+        "className": "",
+        "x": 650,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "00a627a03068ce4d",
+        "type": "mqtt in",
+        "z": "ce81de5085f2bd5c",
+        "name": "",
+        "topic": "esp32/temperature",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "31ff0f151d1b3c2f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 220,
+        "wires": [
+            [
+                "50ccafe8cb9708d1"
+            ]
+        ]
+    },
+    {
+        "id": "56ca934e928aa55b",
+        "type": "ui_gauge",
+        "z": "ce81de5085f2bd5c",
+        "name": "",
+        "group": "",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "humadity",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "30",
+        "seg2": "50",
+        "diff": false,
+        "className": "",
+        "x": 640,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "ae5e61d5716f84ce",
+        "type": "mqtt in",
+        "z": "ce81de5085f2bd5c",
+        "name": "",
+        "topic": "esp32/humidity",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "31ff0f151d1b3c2f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 180,
+        "y": 340,
+        "wires": [
+            [
+                "ca9eaa675c7de84d"
+            ]
+        ]
+    },
+    {
+        "id": "ca9eaa675c7de84d",
+        "type": "function",
+        "z": "ce81de5085f2bd5c",
+        "name": "function 2",
+        "func": "let t = msg.payload;\nlet h = msg.payload;\n\nmsg.topic = \"INSERT INTO sensor (temperature, humidity) VALUES (\" + t + \",\" + h + \")\";\nreturn msg;\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 320,
+        "wires": [
+            [
+                "117c2b68bbe9f794",
+                "56ca934e928aa55b"
+            ]
+        ]
+    },
+    {
+        "id": "57930288bc90ae9a",
+        "type": "ui_text",
+        "z": "ce81de5085f2bd5c",
+        "group": "",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "STATUS KIPAS",
+        "format": "{{msg.payload}}",
+        "layout": "row-center",
+        "className": "",
+        "style": true,
+        "font": "Arial Black,Arial Black,Gadget,sans-serif",
+        "fontSize": "20",
+        "color": "#000000",
+        "x": 560,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "cbba2dc933d8b650",
+        "type": "mqtt in",
+        "z": "ce81de5085f2bd5c",
+        "name": "",
+        "topic": "esp32/fan_status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "31ff0f151d1b3c2f",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 480,
+        "wires": [
+            [
+                "57930288bc90ae9a"
+            ]
+        ]
+    },
+    {
+        "id": "884f14fed1e22f35",
+        "type": "ui_spacer",
+        "z": "ce81de5085f2bd5c",
+        "name": "spacer",
+        "group": "",
+        "order": 3,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "ef456045cce864d7",
+        "type": "MySQLdatabase",
+        "name": "mysql",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "suhu",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "31ff0f151d1b3c2f",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "mqtt.esp32.my.id",
+        "port": "7931",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
